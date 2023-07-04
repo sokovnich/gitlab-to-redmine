@@ -82,7 +82,7 @@ def update_issues(gl_project, mrs_per_page=100, mrs_pages=1):
                     logging.error(f'Issue {issue_id} is not found')
                     continue
 
-                issue_mrs = issue.custom_fields.get(resource_id=12)
+                issue_mrs = issue.custom_fields.get(resource_id=MRS_FIELD_ID)
                 if not issue_mrs:
                     continue
 
