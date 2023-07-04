@@ -86,7 +86,7 @@ def update_issues(gl_project, mrs_per_page=100, mrs_pages=1):
                 if not issue_mrs:
                     continue
 
-                issue_mrs = issue_mrs.value.split('\n') if issue_mrs.value else []
+                issue_mrs = [mr.strip() for mr in (issue_mrs.value.split('\n') if issue_mrs.value else [])]
                 for issue_mr_id, issue_mr in enumerate(issue_mrs):
                     if gl_mr.web_url in issue_mr:
                         mr_string = get_mr_string(gl_mr)
