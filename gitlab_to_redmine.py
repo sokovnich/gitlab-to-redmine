@@ -38,13 +38,21 @@ def get_issue_ids_from_commits(gitlab_commits):
 
 
 def get_mr_string(gitlab_mr):
-    state_map = {
+    tags_map = {
         'merged': '%{background:lightgreen}MERGED%',
         'opened': '%{background:lightblue}OPENED%',
+        'draft': '%{background:lightblue}DRAFT%',
         'closed': '%{background:red}CLOSED%',
     }
+    draft_prefixes = ['Draft:', '[Draft]', '(Draft)', 'WIP:', '[WIP]']
 
-    return f'''"{gitlab_mr.references['full']}":{gitlab_mr.web_url} {state_map[gitlab_mr.state]}'''
+    tags = [tags_map[gitlab_mr.state]]
+    for prefix in draft_prefixes:
+        if gitlab_mr.title.startswith(prefix):
+            tags.append(tags_map['draft'])
+            break
+
+    return f'''"{gitlab_mr.references['full']}":{gitlab_mr.web_url} {' '.join(tags)}'''
 
 
 def redmine_update_mrs(issue, string):
