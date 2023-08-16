@@ -1,4 +1,3 @@
-import argparse
 import logging
 import os
 import re
@@ -102,11 +101,6 @@ def update_issues(gl_project, mrs_per_page=100, mrs_pages=1):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Gitlab to Redmine')
-    parser.add_argument('gitlab_project_ids', type=int, nargs='+', help='Gitlab project IDs')
-    parser.add_argument('gitlab_project_mrs_limit', type=int, help='Gitlab MRs limit')
-    parser.add_argument('redmine_mrs_field_id', type=int, help='Redmine MRs description custom-field ID')
-
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
     logging.info('Started')
