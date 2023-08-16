@@ -46,10 +46,11 @@ def get_mr_string(gitlab_mr):
     draft_prefixes = ['Draft:', '[Draft]', '(Draft)', 'WIP:', '[WIP]']
 
     tags = [tags_map[gitlab_mr.state]]
-    for prefix in draft_prefixes:
-        if gitlab_mr.title.startswith(prefix):
-            tags.append(tags_map['draft'])
-            break
+    if gitlab_mr.state == 'opened':
+        for prefix in draft_prefixes:
+            if gitlab_mr.title.startswith(prefix):
+                tags.append(tags_map['draft'])
+                break
 
     return f'''"{gitlab_mr.references['full']}":{gitlab_mr.web_url} {' '.join(tags)}'''
 
