@@ -1,14 +1,17 @@
 # gitlab-to-redmine
 
-Simple cron script to sync Gitlab Merge Requests statuses with corresponding Redmine issues.
+Simple cron script to sync Gitlab Merge Request statuses with corresponding Redmine issues.
 
 ## How to use
 
-First you need to create access tokens for Gitlab/Redmine APIs.  
+First you need to create access tokens for Gitlab/Redmine APIs:  
+https://www.redmine.org/projects/redmine/wiki/rest_api#Authentication  
+https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html  
 Gitlab account must have read access to all required projects.  
 Redmine account must have read/write access to all required projects.  
 For Redmine issues in you project you need to create `Custom field`  
-with type `Long text` and `Text formatting` support enabled.  
+with type `Long text` and `Text formatting` support enabled  
+(https://www.redmine.org/projects/redmine/wiki/redminecustomfields).  
 Write access for Redmine account may be limited to this single field.  
 
 To link Redmine issue with corresponding Gitlab Merge Requests  
@@ -19,6 +22,8 @@ or inside any of commit messages in the following format:
 ```
 Every Merge Request conforming to these requirements will be mentioned  
 inside Redmine issue and be kept up to date.  
+
+![redmine](https://github.com/sokovnich/gitlab-to-redmine/assets/20459727/4373dfe8-d2cb-43e1-920a-b99be16a14df)
 
 ### VENV
 
@@ -53,4 +58,10 @@ GLRM_GITLAB_MRS_LIMIT=20
 EOF
 
 docker run --rm --env-file=.env gitlab-to-redmine
+```
+
+Pre-built images are also available on Docker Hub.  
+https://hub.docker.com/r/sokovnich/gitlab-to-redmine  
+```
+docker pull sokovnich/gitlab-to-redmine:latest
 ```
